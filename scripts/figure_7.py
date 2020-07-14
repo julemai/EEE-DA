@@ -4,21 +4,36 @@ from __future__ import print_function
 # Copyright 2019-2020 Juliane Mai - juliane.mai(at)uwaterloo.ca
 #
 # License
-# This file is part of Juliane Mai's personal code library.
+#    This file is part of GitHub "EEE-DA" (https://github.com/julemai/EEE-DA) 
+#    providing data and scripts to reproduce all figures of the publication:
 #
-# Juliane Mai's personal code library is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#       J. Mai, R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020).
+#       Application of Parameter Screening To Derive Optimal Initial State 
+#       Adjustments for Streamflow Forecasting.
+#       Water Resources Research, ??, ???-???.
+#       https://doi.org/10.1002/???.
 #
-# Juliane Mai's personal code library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with Juliane Mai's personal code library.  If not, see <http://www.gnu.org/licenses/>.
+#    The EEE-DA codes are under MIT license.
 #
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+# Usage
 #    python figure_7.py  -i ../data/observations/meteo.nc -a -p figure_7.pdf -t pdf -c "[categorize_meteo_decision_tree_expert, categorize_meteo_decision_tree_EEE]" -r "[[recipe_5,recipe_3,recipe_1],[recipe_1,recipe_4,recipe_3]]"
 
 import argparse
@@ -232,10 +247,6 @@ for icategorizer,categorizer in enumerate(categorizers):
         ttime      = np.reshape(ttime,     [nyears,365])
         categories = np.reshape(categories,[nyears,365])
 
-        # # mask nodata entries
-        # ttime      = np.ma.array(ttime,     mask=categories==-9999)
-        # categories = np.ma.array(categories,mask=categories==-9999)
-
         all_ttime[ibasin] = ttime
         all_categories[ibasin] = categories
 
@@ -289,9 +300,6 @@ elwidth     = 1.0         # errorbar line width
 alwidth     = 1.0         # axis line width
 msize       = 2.5         # marker size
 mwidth      = 1.0         # marker edge width
-# ufz blue (0.0, 0.34509803921568627, 0.611764705882353)
-# ufz dark blue (0.0, 0.24313725490196078, 0.43137254901960786)
-# ufz red (0.8313725490196079, 0.17647058823529413, 0.07058823529411765)
 mcol1       = color.get_brewer('rdylbu4').colors[1]   # observation          --> orange
 mcol2       = color.get_brewer('rdylbu4').colors[3]   # optimal simulation   --> light blue
 mcol3       = color.get_brewer('rdylbu4').colors[2]   # initial simulation   --> dark blue
@@ -392,11 +400,6 @@ cols = color.get_brewer('Paired8', rgb=True)
 cols = color.get_brewer('RdBu8', rgb=True)
 cols = color.get_brewer('RdYlBu8', rgb=True)
 cols = color.get_brewer('BlueYellowRed', rgb=True)
-#cols = color.get_brewer('Spectral8', rgb=True)
-# if not dolog:
-#     # remove two colors starting at the end
-#     cols.pop(2)
-#     cols.pop(0)
 
 # add same alpha as for categories
 def add_alpha(col, alpha):
@@ -434,7 +437,7 @@ for icategorizer,categorizer_name in enumerate(categorizers):
                             left=left, right=right, bottom=bottom, top=top)
         sub    = fig.add_axes(pos)
 
-        cvals = np.append(np.unique(all_cat_categories[icategorizer][ibasin]),np.max(all_cat_categories[icategorizer][ibasin])+1)  #range(np.min(all_cat_categories[icategorizer][ibasin]),np.max(all_cat_categories[icategorizer][ibasin])+1)
+        cvals = np.append(np.unique(all_cat_categories[icategorizer][ibasin]),np.max(all_cat_categories[icategorizer][ibasin])+1)  
         norm = mpl.colors.BoundaryNorm(cvals, cmap.N)
         mesh = sub.pcolormesh(all_cat_categories[icategorizer][ibasin], cmap=cmap, norm=norm, linewidths=0.0, edgecolor='grey')
 
@@ -465,7 +468,7 @@ for icategorizer,categorizer_name in enumerate(categorizers):
         recipe_vars  = all_cat_recipe_info[icategorizer][1]
 
         # determine on how much to shift color bar up
-        cticks = cvals      # dont remove last tick
+        cticks = cvals      
         dy = -0.5
         for irecipe,recipe_cat in enumerate(recipes[icategorizer]):
 
@@ -500,17 +503,14 @@ for icategorizer,categorizer_name in enumerate(categorizers):
             
 
         # Colour bar
-        # print('pos map: ',pos)
         pos  = position(nnrow, ncol, iplot, hspace=hspace, vspace=vvspace,
                             left=left, right=right, bottom=bottom, top=top)
         shrink = 1.0 #0.8
         # [left, bottom, width, height]
-        # print('pos before: ',pos)
         pos[0] += 0.5*(1.-shrink)*pos[2] # shrink
         pos[2]  = shrink*pos[2]
         pos[1] = pos[1]+pos[3]-0.015*dy 
         pos[3] *= 0.16                  # squeeze
-        # print('pos after:  ',pos)
         csub = fig.add_axes(pos, frameon=False)
         cbar = plt.colorbar(mesh, cax=csub, orientation='horizontal')
         if dolog:
@@ -523,9 +523,6 @@ for icategorizer,categorizer_name in enumerate(categorizers):
             base = (np.arange(nticks) % 9) + 1 # 1,2,...,9,1,2,...9,1,2,...
             expo = np.arange(nticks) // 9      # 0,0,...,0,1,1,...1,2,2,...
             cticks = base * 10**expo * 10**lmin
-            # cticks = [0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009,
-            #           0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09,
-            #           0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
             cticknames = [ str(i) for i in cticks ]
             cticknames = [ i if ('1' in i or '3' in i or '5' in i) else '' for i in cticknames ]
             cticknames = str2tex(cticknames, usetex=usetex)
@@ -543,8 +540,7 @@ for icategorizer,categorizer_name in enumerate(categorizers):
             cbar.ax.tick_params(direction='out', length=3, width=1, colors=fgcolor, labelsize=cbartsize, pad=-1.0,
                                 bottom=False, top=True, labelbottom=False, labeltop=True)
             for iitick,itick in enumerate(cticks[:-1]):
-                # print( 'Percentage of days in category "',cticknames[iitick],'"',astr(percent_in_cat[iitick],prec=1))
-                tick_location = cticks #cbar.get_ticks()
+                tick_location = cticks 
                 csub.text(1.0/(len(cvals)-1)*(iitick+0.5), 0.5, str2tex(astr(percent_in_cat[iitick],prec=1)+'%',usetex=usetex),
                               fontsize='xx-small', va='center', ha='center',rotation=0, transform=csub.transAxes)
 
@@ -560,9 +556,6 @@ for icategorizer,categorizer_name in enumerate(categorizers):
         cbar.ax.yaxis.set_label_text(clab, fontsize=cbartsize, va='center', ha='right', rotation=0)
         cbar.ax.yaxis.set_label_coords(-0.03, 0.5, transform=csub.transAxes)
 
-        # print('-------------------------')
-        # print(categorizer_name)
-        # print('-------------------------')
         dy = -0.5
         for irecipe,recipe_cat in enumerate(recipes[icategorizer]):
 
@@ -577,10 +570,8 @@ for icategorizer,categorizer_name in enumerate(categorizers):
                 raise ValueError('Categorizer not known!')
 
             idx = recipe_names.index(recipe_cat)
-            # print(recipe_cat, '  --> idx: ',idx)
 
             vars_recipe = recipe_vars[idx]
-            # print('vars: ',vars_recipe)
             vars_recipe =  [ [ rename_vars[jj] for jj in ii ] for ii in vars_recipe ] # rename vars
             nvars = [len(vars_recipe[iitick]) for iitick,itick in enumerate(cticks[1:-1]) ]
 
@@ -609,7 +600,6 @@ for icategorizer,categorizer_name in enumerate(categorizers):
                 else:
                     lbl = ','.join([ ('$'+ii+'}$').replace('v','v_{') for ii in vars_recipe[iitick] ])
 
-                # dy = 0.5-(irecipe+1)
                 csub.text(1.0/(len(cvals)-1)*(iitick+1.5), dy, str2tex(lbl,usetex=usetex), fontsize='xx-small', va='top', ha='center',rotation=0, transform=csub.transAxes)
 
             # set dy for next recipe
@@ -628,107 +618,6 @@ elif (outtype == 'png'):
     fig.savefig(pngfile, transparent=transparent, bbox_inches=bbox_inches, pad_inches=pad_inches)
     plt.close(fig)
     
-
-# # ------------------------------------------
-# # categorizations for all basins
-# # ------------------------------------------
-
-# for icategorizer,categorizer_name in enumerate(categorizers):
-    
-#     ifig += 1
-#     iplot = 0
-#     fig = plt.figure(ifig)
-
-#     for ibasin in range(nbasins):
-        
-#         iplot += 1
-
-#         sub    = fig.add_axes(position(nrow,ncol,iplot,hspace=hspace,vspace=vspace))
-
-#         cvals = np.append(np.unique(all_cat_categories[icategorizer][ibasin]),np.max(all_cat_categories[icategorizer][ibasin])+1)  #range(np.min(all_cat_categories[icategorizer][ibasin]),np.max(all_cat_categories[icategorizer][ibasin])+1)
-#         norm = mpl.colors.BoundaryNorm(cvals, cmap.N)
-#         mesh = sub.pcolormesh(all_cat_categories[icategorizer][ibasin], cmap=cmap, norm=norm, linewidths=0.0, edgecolor='grey')
-
-#         if (iplot == nbasins):
-#             xlabel = str2tex('Day of Year',usetex=usetex)
-#             xticks = np.arange(0,365,50)
-#             xticklabels = [ str2tex(str(ii), usetex=usetex) for ii in xticks ]
-#         else:
-#             xlabel = str2tex('',usetex=usetex)
-#             xticks = np.arange(0,365,50)
-#             xticklabels = [ str2tex('', usetex=usetex) for ii in xticks ]
-            
-#         yticks      = np.arange((all_cat_ttime[icategorizer][ibasin][0,0].year-all_cat_ttime[icategorizer][ibasin][0,0].year%10+10)-all_cat_ttime[icategorizer][ibasin][0,0].year,nyears,10)
-#         yticklabels = [ str2tex(str(ii+all_cat_ttime[icategorizer][ibasin][0,0].year), usetex=usetex) for ii in yticks ]
-#         ylabel = str2tex('Year',usetex=usetex)
-
-#         plt.setp(sub, xlabel=xlabel, xticks=xticks, xticklabels=xticklabels)
-#         plt.setp(sub, ylabel=ylabel, yticks=yticks, yticklabels=yticklabels)
-
-#         # basin name
-#         sub.text(1.03, 0.5, '\n'.join(basin_name[ibasin].split()), fontsize=cbartsize, va='center', ha='center',rotation=90,transform=sub.transAxes)
-
-#         # numbering of subplots
-#         abc2plot(sub, dxabc, dyabc, iplot, lower=False, bold=True, va='top', ha='right', usetex=usetex, mathrm=True, parenthesis='none')
-
-#         if (iplot == 1):
-#             # Colour bar
-#             pos  = position(nrow, ncol, iplot, hspace=hspace, vspace=vspace,
-#                                 left=left, right=right, bottom=bottom, top=top)
-#             shrink = 0.8
-#             pos[0] += 0.5*(1.-shrink)*pos[2] # shrink
-#             pos[2]  = shrink*pos[2]
-#             pos[1] += 1.15*pos[3]            # shift up
-#             pos[3] *= 0.16                 # squeeze
-#             csub = fig.add_axes(pos, frameon=False)
-#             cbar = plt.colorbar(mesh, cax=csub, orientation='horizontal')
-#             if dolog:
-#                 # upper labels
-#                 min_cbar = cvals[1]
-#                 max_cbar = cvals[-1]
-#                 lmin = np.log10(min_cbar)
-#                 assert lmin/int(lmin) == 1., '\nmin_cbar must be power of 10.'
-#                 nticks = np.floor(9*(np.log10(max_cbar) - lmin)) +1 # -1
-#                 base = (np.arange(nticks) % 9) + 1 # 1,2,...,9,1,2,...9,1,2,...
-#                 expo = np.arange(nticks) // 9      # 0,0,...,0,1,1,...1,2,2,...
-#                 cticks = base * 10**expo * 10**lmin
-#                 # cticks = [0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009,
-#                 #           0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09,
-#                 #           0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-#                 cticknames = [ str(i) for i in cticks ]
-#                 cticknames = [ i if ('1' in i or '3' in i or '5' in i) else '' for i in cticknames ]
-#                 cticknames = str2tex(cticknames, usetex=usetex)
-#                 cbar.set_ticks(cticks)
-#                 cbar.set_ticklabels(cticknames)
-#                 cbar.ax.tick_params(direction='out', length=3, width=1, colors=fgcolor, labelsize=cbartsize, pad=-1.0,
-#                                     bottom='off', top='on', labelbottom='off', labeltop='on')
-#             else:
-#                 cticks = cvals[:-1] # remove last tick
-#                 cticks = cvals      # dont remove last tick
-#                 cticknames = [ str2tex('$C_{'+str(i)+'}$') if i>0 else str2tex('no data') for i in cticks ]
-#                 cticknames = str2tex(cticknames, usetex=usetex)
-#                 cbar.set_ticks(cticks[:-1]+np.diff(cticks)/2.) # draw ticks in the middle
-#                 cbar.set_ticklabels(cticknames)
-#                 cbar.ax.tick_params(direction='out', length=3, width=1, colors=fgcolor, labelsize=cbartsize, pad=-1.0,
-#                                     bottom='off', top='on', labelbottom='off', labeltop='on')
-#                 for iitick,itick in enumerate(cticks[:-1]):
-#                     # print( 'Percentage of days in category "',cticknames[iitick],'"',astr(percent_in_cat[iitick],prec=1))
-#                     tick_location = cticks #cbar.get_ticks()
-#                     csub.text(1.0/(len(cvals)-1)*(iitick+0.5), 0.5, str2tex(astr(percent_in_cat[iitick],prec=1)+'%',usetex=usetex), fontsize='xx-small', va='center', ha='center',rotation=0)
-                    
-#             clab = r"Category"
-#             clab = str2tex(clab, usetex=usetex)
-#             cbar.ax.yaxis.set_label_text(clab, fontsize=cbartsize, va='center', ha='right', rotation=0)
-#             cbar.ax.yaxis.set_label_coords(-0.03, 0.5, transform=csub.transAxes)
-                
-
-#     if (outtype == 'pdf'):
-#         pdf_pages.savefig(fig)
-#         plt.close(fig)
-#     elif (outtype == 'png'):
-#         pngfile = pngbase+"{0:04d}".format(ifig)+".png"
-#         fig.savefig(pngfile, transparent=transparent, bbox_inches=bbox_inches, pad_inches=pad_inches)
-#         plt.close(fig)
 
 
 # ------------------------------

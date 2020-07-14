@@ -4,21 +4,36 @@ from __future__ import print_function
 # Copyright 2019-2020 Juliane Mai - juliane.mai(at)uwaterloo.ca
 #
 # License
-# This file is part of Juliane Mai's personal code library.
+#    This file is part of GitHub "EEE-DA" (https://github.com/julemai/EEE-DA) 
+#    providing data and scripts to reproduce all figures of the publication:
 #
-# Juliane Mai's personal code library is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#       J. Mai, R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020).
+#       Application of Parameter Screening To Derive Optimal Initial State 
+#       Adjustments for Streamflow Forecasting.
+#       Water Resources Research, ??, ???-???.
+#       https://doi.org/10.1002/???.
 #
-# Juliane Mai's personal code library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with Juliane Mai's personal code library.  If not, see <http://www.gnu.org/licenses/>.
+#    The EEE-DA codes are under MIT license.
 #
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+# Usage
 # python figure_5.py -i ../data/eee/ -o ../data/eee/eee_results.nc -p figure_5.pdf -t pdf -u
 
 import argparse
@@ -323,9 +338,6 @@ elwidth     = 1.0         # errorbar line width
 alwidth     = 1.0         # axis line width
 msize       = 2.5         # marker size
 mwidth      = 1.0         # marker edge width
-# ufz blue (0.0, 0.34509803921568627, 0.611764705882353)
-# ufz dark blue (0.0, 0.24313725490196078, 0.43137254901960786)
-# ufz red (0.8313725490196079, 0.17647058823529413, 0.07058823529411765)
 mcol1       = color.get_brewer('rdylbu4').colors[1]   # observation          --> orange
 mcol2       = color.get_brewer('rdylbu4').colors[3]   # optimal simulation   --> light blue
 mcol3       = color.get_brewer('rdylbu4').colors[2]   # initial simulation   --> dark blue
@@ -489,18 +501,6 @@ for iibasin, ibasin in enumerate(basin_short_name):
         clab = str2tex('Information Content\n of Model Variable', usetex=usetex)
         cbar.ax.yaxis.set_label_text(clab, fontsize=cbartsize, va='center', ha='right', rotation=0)
         cbar.ax.yaxis.set_label_coords(-0.03, 0.5, transform=csub.transAxes)
-
-    # if iplot == nbasins:
-    #     sub.text(0.00, -0.5, str2tex("7-day simulation period using Kenjynized forcings regarding simulated streamflow ",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -0.7, str2tex("$v_1$ ... intercept in linear adjustment of niveauEauSol",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -0.8, str2tex("$v_2$ ... intercept in linear adjustment of niveauEauNappe",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -0.9, str2tex("$v_3$ ... intercept in linear adjustment of G (previously stockNeige)",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -1.0, str2tex("$v_4$ ... intercept in linear adjustment of eTg (previously indexMurissementNeige)",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -1.1, str2tex("$v_5$ ... removed from code (previously indexTempNeige)",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -1.2, str2tex("$v_6$ ... intercept in linear adjustment of precipitation ($a$ in $a + b \cdot prec$)",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -1.3, str2tex("$v_7$ ... slope in linear adjustment of precipitation ($b$ in $a + b \cdot prec$)",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -1.4, str2tex("$v_8$ ... intercept in linear adjustment of temperature ($a$ in $a + b \cdot temp$)",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
-    #     sub.text(0.00, -1.5, str2tex("$v_9$ ... slope in linear adjustment of temperature ($b$ in $a + b \cdot temp$)",usetex=usetex), fontsize=cbartsize, va='center', ha='left',rotation=0,transform=sub.transAxes)
 
 if (outtype == 'pdf'):
     pdf_pages.savefig(fig)

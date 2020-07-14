@@ -1,24 +1,39 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
-# Copyright 2019 Juliane Mai - juliane.mai(at)uwaterloo.ca
+# Copyright 2019-2020 Juliane Mai - juliane.mai(at)uwaterloo.ca
 #
 # License
-# This file is part of Juliane Mai's personal code library.
+#    This file is part of GitHub "EEE-DA" (https://github.com/julemai/EEE-DA) 
+#    providing data and scripts to reproduce all figures of the publication:
 #
-# Juliane Mai's personal code library is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#       J. Mai, R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020).
+#       Application of Parameter Screening To Derive Optimal Initial State 
+#       Adjustments for Streamflow Forecasting.
+#       Water Resources Research, ??, ???-???.
+#       https://doi.org/10.1002/???.
 #
-# Juliane Mai's personal code library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with Juliane Mai's personal code library.  If not, see <http://www.gnu.org/licenses/>.
+#    The EEE-DA codes are under MIT license.
 #
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+# Usage
 #    to dump results to NetCDF
 #    -----------------------------
 #    python figure_9.py -o "/Users/j6mai/Documents/GitHub/CRD-DA/scripts/forward_run/open-loop_performance/meteo/" -i "[forecast_performance_EEE.nc, forecast_performance_expert.nc]"  -b "[Passes Dangereuses, Peribonka, Lac Manouane, Montagnes Blanches]" -p figure_9.pdf -t pdf
@@ -207,7 +222,6 @@ if not(read_from_netcdf):
             # create group
             grp_basin = opt_results_EEE.createGroup(irecipe+'/'+ibasin)
 
-            # path = os.path.normpath(os.path.join(dir_path,'../engage_plus_runs',pre_string+categorizer.__name__,basins[ibasin][0]))
             path_forecast = os.path.normpath(os.path.join(input_folder_EEE,irecipe,basins[ibasin][0]))
             path_openloop = os.path.normpath(os.path.join(openloop_folder,basins[ibasin][0]))
 
@@ -524,7 +538,6 @@ if not(read_from_netcdf):
             # create group
             grp_basin = opt_results_expert.createGroup(irecipe+'/'+ibasin)
 
-            # path = os.path.normpath(os.path.join(dir_path,'../engage_plus_runs',pre_string+categorizer.__name__,basins[ibasin][0]))
             path_forecast = os.path.normpath(os.path.join(input_folder_expert,irecipe,basins[ibasin][0]))
             path_openloop = os.path.normpath(os.path.join(openloop_folder,basins[ibasin][0]))
 
@@ -848,9 +861,6 @@ elwidth     = 1.0         # errorbar line width
 alwidth     = 1.0         # axis line width
 msize       = 2.5         # marker size
 mwidth      = 1.0         # marker edge width
-# ufz blue (0.0, 0.34509803921568627, 0.611764705882353)
-# ufz dark blue (0.0, 0.24313725490196078, 0.43137254901960786)
-# ufz red (0.8313725490196079, 0.17647058823529413, 0.07058823529411765)
 mcol1       = color.get_brewer('rdylbu4').colors[1]   # observation          --> orange
 mcol2       = color.get_brewer('rdylbu4').colors[3]   # optimal simulation   --> light blue
 mcol3       = color.get_brewer('rdylbu4').colors[2]   # initial simulation   --> dark blue
@@ -953,11 +963,6 @@ cols_basin = color.get_brewer('Paired4', rgb=True)   # need to be at least 4 col
 cols = color.get_brewer('RdBu8', rgb=True)
 cols_category = color.get_brewer('RdYlBu6', rgb=True)    # need to be at least 6 colors
 cols_dense = color.get_brewer('BlueWhiteOrangeRed', rgb=True) 
-#cols = color.get_brewer('Spectral8', rgb=True)
-# if not dolog:
-#     # remove two colors starting at the end
-#     cols.pop(2)
-#     cols.pop(0)
 
 # add same alpha as for categories
 def add_alpha(col, alpha):
@@ -982,10 +987,8 @@ def metric_name(objective_short_name):
         return 'WAE'
     elif (objective_short_name == 'absT0'):
         return '$M_0^{abs}$'
-        #return '$|Q^{obs}(0)-Q^{sim}(0)|$'
     elif (objective_short_name == 'relT0'):
         return '$M_0^{rel}$'
-        #return '$|Q^{obs}(0)-Q^{sim}(0)|/Q^{obs}(0)$'
     elif (objective_short_name == 'VE_T1_3'):
         return '$M_1$'
     elif (objective_short_name == 'VE_T1_7'):

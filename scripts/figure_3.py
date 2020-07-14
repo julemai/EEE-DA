@@ -4,21 +4,36 @@ from __future__ import print_function
 # Copyright 2019-2020 Juliane Mai - juliane.mai(at)uwaterloo.ca
 #
 # License
-# This file is part of Juliane Mai's personal code library.
+#    This file is part of GitHub "EEE-DA" (https://github.com/julemai/EEE-DA) 
+#    providing data and scripts to reproduce all figures of the publication:
 #
-# Juliane Mai's personal code library is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#       J. Mai, R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020).
+#       Application of Parameter Screening To Derive Optimal Initial State 
+#       Adjustments for Streamflow Forecasting.
+#       Water Resources Research, ??, ???-???.
+#       https://doi.org/10.1002/???.
 #
-# Juliane Mai's personal code library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with Juliane Mai's personal code library.  If not, see <http://www.gnu.org/licenses/>.
+#    The EEE-DA codes are under MIT license.
 #
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+# Usage
 # python figure_3.py -b "[Peribonka, Montagnes Blanches]" -m ../data/open_loop/resultats_1953-01-01_original.nc -n ../data/open_loop/resultats_1953-01-01_corrected.nc -t 2012-01-01_2013-12-31 -i ../data/observations/ObservedData.nc -o figure_3.pdf
 
 # -----------------------
@@ -105,10 +120,6 @@ del parser, args
 
 
 basins = collections.OrderedDict()
-# basins['Ashuapmushuan Amont'] = ['ASHAM',   8, [20,21,22,23]]
-# basins['Mistassini 2']        = ['MISNI2',  9, [24,25,26]]
-# basins['Peribonka']           = ['PERIB',  18, [43,44]]
-# basins['Montagnes Blanches']  = ['MBLANC', 20, [48]]
 basins['Passes Dangereuses'] = ['PD',     1, [1,2,3,4,5]]
 basins['Peribonka']          = ['PERIB',  2, [6,7]]
 basins['Lac Manouane']       = ['LM',     3, [8,9,10]]
@@ -175,10 +186,6 @@ for basin in basin_name:
     nc_results_corrected = nc4.NcDataset(results_file_corrected, "r")
 
     # read inflows
-    # inflows_sim_original  = nc_results_original.groups["etatsCP"].variables["debit"][:]  # np.shape(nreach, ndays)
-    # inflows_sim_original  = inflows_sim_original[:,0]                                    # [0,:] --> first reach is outlet of catchment
-    # inflows_sim_corrected = nc_results_corrected.groups["etatsCP"].variables["debit"][:]  # np.shape(nreach, ndays)
-    # inflows_sim_corrected = inflows_sim_corrected[:,0]                                    # [0,:] --> first reach is outlet of catchment
     var    = "debitExutoire"
     ibasin = basin_id - 1
     group  = "etatsCP"
@@ -330,11 +337,6 @@ cols_basin = color.get_brewer('Paired4', rgb=True)   # need to be at least 4 col
 cols = color.get_brewer('RdBu8', rgb=True)
 cols_category = color.get_brewer('RdYlBu8', rgb=True)    # need to be at least 8 colors
 cols_dense = color.get_brewer('BlueWhiteOrangeRed', rgb=True) 
-#cols = color.get_brewer('Spectral8', rgb=True)
-# if not dolog:
-#     # remove two colors starting at the end
-#     cols.pop(2)
-#     cols.pop(0)
 
 # add same alpha as for categories
 def add_alpha(col, alpha):
@@ -366,9 +368,6 @@ elwidth     = 1.0         # errorbar line width
 alwidth     = 1.0         # axis line width
 msize       = 2.5         # marker size
 mwidth      = 1.0         # marker edge width
-# ufz blue (0.0, 0.34509803921568627, 0.611764705882353)
-# ufz dark blue (0.0, 0.24313725490196078, 0.43137254901960786)
-# ufz red (0.8313725490196079, 0.17647058823529413, 0.07058823529411765)
 mcol1       = color.colours('gray')      # primary marker colour
 mcol2       = colors[2]                  # secondary
 mcol3       = colors[8]                  # third
@@ -487,11 +486,6 @@ for ibasin,basin in enumerate(basin_name):
     plt.setp(sub, ylabel=ylab)
     sub.grid(False)
 
-    # text box with objective function values
-    # sub.text(0.97, 0.9, str2tex("WAE = "+astr(wae_original[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
-    #                  rotation=0, fontsize='small',
-    #                  horizontalalignment='right', verticalalignment='center')
-
     sub.text(0.0, 1.14, str2tex("Original: "), transform=sub.transAxes,
                  color=mcol2,
                  rotation=0, fontsize='small',
@@ -504,18 +498,10 @@ for ibasin,basin in enumerate(basin_name):
                  color=mcol2,
                  rotation=0, fontsize='small',
                  horizontalalignment='left', verticalalignment='center')
-    # sub.text(0.25, 1.14, str2tex("MSE = "+astr(mse_original[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
-    #              color=mcol2,
-    #              rotation=0, fontsize='small',
-    #              horizontalalignment='left', verticalalignment='center')
     sub.text(0.515, 1.14, str2tex("RMSE = "+astr(rmse_original[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
                  color=mcol2,
                  rotation=0, fontsize='small',
                  horizontalalignment='left', verticalalignment='center')
-    # sub.text(0.45, 1.14, str2tex("MAE = "+astr(mae_original[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
-    #              color=mcol2,
-    #              rotation=0, fontsize='small',
-    #              horizontalalignment='left', verticalalignment='center')
     sub.text(0.7075, 1.14, str2tex("BIAS = "+astr(bias_original[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
                  color=mcol2,
                  rotation=0, fontsize='small',
@@ -524,9 +510,6 @@ for ibasin,basin in enumerate(basin_name):
                  color=mcol2,
                  rotation=0, fontsize='small',
                  horizontalalignment='left', verticalalignment='center')
-    #sub.text(0.65, 1.05, str2tex("$\Delta t_{"+astr(np.shape(inflows_obs_original[ibasin])[0]-1)+"}$ = "+astr(diff_T_0_original[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
-    #                 rotation=0, fontsize='small',
-    #                 horizontalalignment='left', verticalalignment='center')
 
 
     sub.text(0.0, 1.05, str2tex("Corrected: "), transform=sub.transAxes,
@@ -541,18 +524,10 @@ for ibasin,basin in enumerate(basin_name):
                      color=mcol3,             
                      rotation=0, fontsize='small',
                      horizontalalignment='left', verticalalignment='center')
-    # sub.text(0.25, 1.105, str2tex("MSE = "+astr(mse_corrected[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
-    #                  color=mcol3,
-    #                  rotation=0, fontsize='small',
-    #                  horizontalalignment='left', verticalalignment='center')
     sub.text(0.515, 1.05, str2tex("RMSE = "+astr(rmse_corrected[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
                      color=mcol3,
                      rotation=0, fontsize='small',
                      horizontalalignment='left', verticalalignment='center')
-    # sub.text(0.45, 1.05, str2tex("MAE = "+astr(mae_corrected[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
-    #                  color=mcol3,
-    #                  rotation=0, fontsize='small',
-    #                  horizontalalignment='left', verticalalignment='center')
     sub.text(0.7075, 1.05, str2tex("BIAS = "+astr(bias_corrected[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
                      color=mcol3,
                      rotation=0, fontsize='small',
@@ -561,10 +536,6 @@ for ibasin,basin in enumerate(basin_name):
                      color=mcol3,
                      rotation=0, fontsize='small',
                      horizontalalignment='left', verticalalignment='center')
-    #sub.text(0.65, 1.05, str2tex("$\Delta t_{"+astr(np.shape(inflows_obs_corrected[ibasin])[0]-1)+"}$ = "+astr(diff_T_0_corrected[ibasin],prec=2),usetex=usetex), transform=sub.transAxes,
-    #                 color=mcol3,
-    #                 rotation=0, fontsize='small',
-    #                 horizontalalignment='left', verticalalignment='center')
 
 
     # basin name

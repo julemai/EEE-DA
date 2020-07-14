@@ -4,21 +4,36 @@ from __future__ import print_function
 # Copyright 2019-2020 Juliane Mai - juliane.mai(at)uwaterloo.ca
 #
 # License
-# This file is part of Juliane Mai's personal code library.
+#    This file is part of GitHub "EEE-DA" (https://github.com/julemai/EEE-DA) 
+#    providing data and scripts to reproduce all figures of the publication:
 #
-# Juliane Mai's personal code library is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#       J. Mai, R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020).
+#       Application of Parameter Screening To Derive Optimal Initial State 
+#       Adjustments for Streamflow Forecasting.
+#       Water Resources Research, ??, ???-???.
+#       https://doi.org/10.1002/???.
 #
-# Juliane Mai's personal code library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with Juliane Mai's personal code library.  If not, see <http://www.gnu.org/licenses/>.
+#    The EEE-DA codes are under MIT license.
 #
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+# Usage
 #    to dump results to NetCDF
 #    -----------------------------
 #    python figure_8.py -o "/Users/j6mai/Documents/GitHub/CRD-DA/scripts/forward_run/open-loop_performance/meteoCorrected/" -i "[forecast_performance_EEE.nc, forecast_performance_expert.nc]" -b "[Passes Dangereuses, Peribonka, Lac Manouane, Montagnes Blanches]" -p figure_8.pdf -t pdf   --only_summer
@@ -204,7 +219,6 @@ if not(read_from_netcdf):
             # create group
             grp_basin = opt_results_EEE.createGroup(irecipe+'/'+ibasin)
 
-            # path = os.path.normpath(os.path.join(dir_path,'../engage_plus_runs',pre_string+categorizer.__name__,basins[ibasin][0]))
             path_forecast = os.path.normpath(os.path.join(input_folder_EEE,irecipe,basins[ibasin][0]))
             path_openloop = os.path.normpath(os.path.join(openloop_folder,basins[ibasin][0]))
 
@@ -521,7 +535,6 @@ if not(read_from_netcdf):
             # create group
             grp_basin = opt_results_expert.createGroup(irecipe+'/'+ibasin)
 
-            # path = os.path.normpath(os.path.join(dir_path,'../engage_plus_runs',pre_string+categorizer.__name__,basins[ibasin][0]))
             path_forecast = os.path.normpath(os.path.join(input_folder_expert,irecipe,basins[ibasin][0]))
             path_openloop = os.path.normpath(os.path.join(openloop_folder,basins[ibasin][0]))
 
@@ -845,9 +858,6 @@ elwidth     = 1.0         # errorbar line width
 alwidth     = 1.0         # axis line width
 msize       = 2.5         # marker size
 mwidth      = 1.0         # marker edge width
-# ufz blue (0.0, 0.34509803921568627, 0.611764705882353)
-# ufz dark blue (0.0, 0.24313725490196078, 0.43137254901960786)
-# ufz red (0.8313725490196079, 0.17647058823529413, 0.07058823529411765)
 mcol1       = color.get_brewer('rdylbu4').colors[1]   # observation          --> orange
 mcol2       = color.get_brewer('rdylbu4').colors[3]   # optimal simulation   --> light blue
 mcol3       = color.get_brewer('rdylbu4').colors[2]   # initial simulation   --> dark blue
@@ -950,11 +960,6 @@ cols_basin = color.get_brewer('Paired4', rgb=True)   # need to be at least 4 col
 cols = color.get_brewer('RdBu8', rgb=True)
 cols_category = color.get_brewer('RdYlBu6', rgb=True)    # need to be at least 6 colors
 cols_dense = color.get_brewer('BlueWhiteOrangeRed', rgb=True) 
-#cols = color.get_brewer('Spectral8', rgb=True)
-# if not dolog:
-#     # remove two colors starting at the end
-#     cols.pop(2)
-#     cols.pop(0)
 
 # add same alpha as for categories
 def add_alpha(col, alpha):
@@ -979,10 +984,8 @@ def metric_name(objective_short_name):
         return 'WAE'
     elif (objective_short_name == 'absT0'):
         return '$M_0^{abs}$'
-        #return '$|Q^{obs}(0)-Q^{sim}(0)|$'
     elif (objective_short_name == 'relT0'):
         return '$M_0^{rel}$'
-        #return '$|Q^{obs}(0)-Q^{sim}(0)|/Q^{obs}(0)$'
     elif (objective_short_name == 'VE_T1_3'):
         return '$M_1$'
     elif (objective_short_name == 'VE_T1_7'):
@@ -1211,22 +1214,6 @@ for iirecipe_expert, irecipe_expert in enumerate(recipe_expert):
                             rotation=90, fontsize=textsize-4,
                             horizontalalignment='center', verticalalignment='center')
 
-# # Get artists and labels for legend and chose which ones to display
-# handles, labels = sub.get_legend_handles_labels()
-# display         = [0]
-
-# # Create custom artists
-# boxes = [plt.Line2D((0,2),(0,0), color=colors[ii+1], marker='s', linestyle='') for ii in range(nrecipe_EEE+nrecipe_expert)]
-# box_labels = [str2tex('EEE '+ii.replace('_',' '),usetex=usetex) for ii in recipe_EEE] + [str2tex('Expert '+ii.replace('_',' '),usetex=usetex) for ii in recipe_expert]
-
-# # Create legend from custom artist/label lists
-# sub.legend([handle for i,handle in enumerate(handles) if i in display]+boxes, 
-#            [label  for i,label  in enumerate(labels)  if i in display]+box_labels, 
-#            frameon=frameon, ncol=4,
-#            fontsize=textsize-3,
-#            labelspacing=llrspace, handletextpad=llhtextpad, handlelength=llhlength,
-#            loc='upper center', bbox_to_anchor=(1.15,-0.3), scatterpoints=1, numpoints=1)
-
 xlabel = ''
 xticks = sub.get_xticks()
 sub.set_xticks(range(len(basin_name)))
@@ -1238,66 +1225,6 @@ plt.setp(sub, xlabel=xlabel, xticklabels=xticklabels)
 plt.setp(sub, xlim=[-0.5,nbasins-0.4], ylim=[-2,110])
 
 abc2plot(sub,dxabc,dyabc,iplot,bold=True,usetex=usetex,mathrm=True, large=True, parenthesis='none',horizontalalignment='right', verticalalignment='bottom',zorder=400)
-
-# # -----------------------------------------
-# # count on how often one method is better than another
-# # -----------------------------------------
-# for iibasin, ibasin in enumerate(basin_name):
-
-    # iplot += 1
-
-    # sub = fig.add_axes(position(nrow,ncol,iplot,hspace=hspace,vspace=vspace))
-
-    # line1 = sub.plot( obj_after_EEE[0][iibasin] )
-    # color_method = colors[1]
-    # plt.setp(line1, linestyle='-', color=color_method, linewidth=lwidth,
-    #              marker='None', markeredgecolor=color_method, markerfacecolor=color_method,
-    #              markersize=msize, markeredgewidth=mwidth)
-    
-    # line2 = sub.plot( obj_after_expert[0][iibasin] )
-    # color_method = colors[2]
-    # plt.setp(line2, linestyle='-', color=color_method, linewidth=lwidth,
-    #              marker='None', markeredgecolor=color_method, markerfacecolor=color_method,
-    #              markersize=msize, markeredgewidth=mwidth)
-    
-    # line3 = sub.plot( obj_after_expert[1][iibasin] )
-    # color_method = colors[3]
-    # plt.setp(line3, linestyle='-', color=color_method, linewidth=lwidth,
-    #              marker='None', markeredgecolor=color_method, markerfacecolor=color_method,
-    #              markersize=msize, markeredgewidth=mwidth)
-
-    # print('---------------------------------------------------------------------')
-    # print('BASIN: ',ibasin)
-    # #                        EEE   expert      expert 
-    # #    > 1% Better than          recipe 1    recipe 2
-    # # EEE                     -    XX %        XX %
-    # # expert recipe 1        XX %    -         XX %
-    # # expert recipe 2        XX %  XX %         -
-    # perform_matrix = np.array([[-9.9,
-    #                             np.ma.sum(obj_after_EEE[0][iibasin].data    < 0.99*obj_after_expert[0][iibasin].data)*100.0/np.ma.count(obj_after_EEE[0][iibasin].data   ),
-    #                             np.ma.sum(obj_after_EEE[0][iibasin].data    < 0.99*obj_after_expert[1][iibasin].data)*100.0/np.ma.count(obj_after_EEE[0][iibasin].data   ) ],
-    #                            [np.ma.sum(obj_after_expert[0][iibasin].data < 0.99*obj_after_EEE[0][iibasin].data   )*100.0/np.ma.count(obj_after_expert[0][iibasin].data),
-    #                             -9.9,
-    #                             np.ma.sum(obj_after_expert[0][iibasin].data < 0.99*obj_after_expert[1][iibasin].data)*100.0/np.ma.count(obj_after_expert[0][iibasin].data) ],
-    #                            [np.ma.sum(obj_after_expert[1][iibasin].data < 0.99*obj_after_EEE[0][iibasin].data   )*100.0/np.ma.count(obj_after_expert[1][iibasin].data),
-    #                             np.ma.sum(obj_after_expert[1][iibasin].data < 0.99*obj_after_expert[0][iibasin].data)*100.0/np.ma.count(obj_after_expert[1][iibasin].data),
-    #                             -9.9]])
-    # print('EEE better than Expert recipe 1:             ',perform_matrix[0,1])
-    # print('EEE better than Expert recipe 2:             ',perform_matrix[0,2])
-    # print('Expert recipe 1 better than EEE:             ',perform_matrix[1,0])
-    # print('Expert recipe 1 better than Expert recipe 2: ',perform_matrix[1,2])
-    # print('Expert recipe 2 better than EEE:             ',perform_matrix[2,0])
-    # print('Expert recipe 2 better than Expert recipe 1: ',perform_matrix[2,1])
-
-    # print(' \\begin{tabular}{llrrr}                                                                              ')
-    # print('     \hline                                                                                          ')
-    # print('        & \multirow{2}{* }{Better than}     & EEE      & Expert   & Expert   \\\\                      ')
-    # print('        &                                   & recipe   & recipe 1 & recipe 2 \\\\ \hline               ')
-    # print('     \multirow{3}{*}{'+basins[ibasin][0]+'}  & EEE recipe      & -        & $\mathbf{'+astr(perform_matrix[0,1],prec=1)+'\%}$ & $'+astr(perform_matrix[0,2],prec=1)+'\%$ \\\\             ')
-    # print('                          & Expert recipe 1 & $'+astr(perform_matrix[1,0],prec=1)+'\%$ & -        & $'+astr(perform_matrix[1,2],prec=1)+'\%$ \\\\                      ')
-    # print('                          & Expert recipe 2 & $\mathbf{'+astr(perform_matrix[2,0],prec=1)+'\%}$ & $\mathbf{'+astr(perform_matrix[2,1],prec=1)+'\%}$ & -        \\ \hline    ')
-    # print(' \end{tabular}   
-    #                                                                                   ')
 
     
     

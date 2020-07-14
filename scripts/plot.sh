@@ -44,7 +44,7 @@ dofig1=0     # figure_1:               (A) Overview of the Saguenay–Lac-Saint-
 #                                      Canada. (B) Highlighted four subbasins used for this study. Details about the basins can be
 #                                      found in Table 1.
 
-dofig2=1     # figure_2:               Flowchart of the hydrologic model CEQUEAU. The adjustment variables vi in this
+dofig2=0     # figure_2:               Flowchart of the hydrologic model CEQUEAU. The adjustment variables vi in this
 #                                      study are indicated by the labels in circles. The state variables considered in this study are the
 #                                      level of the soil reservoir (adjusted through v1 in [mm]), the level of the groundwater reservoir
 #                                      (adjusted through v2 in [mm]), the amount of snow in the snowpack (adjusted through v3 in

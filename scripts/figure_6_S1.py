@@ -4,21 +4,36 @@ from __future__ import print_function
 # Copyright 2019-2020 Juliane Mai - juliane.mai(at)uwaterloo.ca
 #
 # License
-# This file is part of Juliane Mai's personal code library.
+#    This file is part of GitHub "EEE-DA" (https://github.com/julemai/EEE-DA) 
+#    providing data and scripts to reproduce all figures of the publication:
 #
-# Juliane Mai's personal code library is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+#       J. Mai, R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020).
+#       Application of Parameter Screening To Derive Optimal Initial State 
+#       Adjustments for Streamflow Forecasting.
+#       Water Resources Research, ??, ???-???.
+#       https://doi.org/10.1002/???.
 #
-# Juliane Mai's personal code library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License
-# along with Juliane Mai's personal code library.  If not, see <http://www.gnu.org/licenses/>.
+#    The EEE-DA codes are under MIT license.
 #
+#    Permission is hereby granted, free of charge, to any person obtaining a copy
+#    of this software and associated documentation files (the "Software"), to deal
+#    in the Software without restriction, including without limitation the rights
+#    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#    copies of the Software, and to permit persons to whom the Software is
+#    furnished to do so, subject to the following conditions:
+#
+#    The above copyright notice and this permission notice shall be included in all
+#    copies or substantial portions of the Software.
+#
+#    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#    SOFTWARE.
+#
+# Usage
 #    python figure_6_S1.py  -i ../data/eee/ -o ../data/eee/eee_results.nc -p figure_6_S1_ -t png -u
 
 import argparse
@@ -345,9 +360,6 @@ elwidth     = 1.0         # errorbar line width
 alwidth     = 1.0         # axis line width
 msize       = 2.5         # marker size
 mwidth      = 1.0         # marker edge width
-# ufz blue (0.0, 0.34509803921568627, 0.611764705882353)
-# ufz dark blue (0.0, 0.24313725490196078, 0.43137254901960786)
-# ufz red (0.8313725490196079, 0.17647058823529413, 0.07058823529411765)
 mcol1       = color.get_brewer('rdylbu4').colors[1]   # observation          --> orange
 mcol2       = color.get_brewer('rdylbu4').colors[3]   # optimal simulation   --> light blue
 mcol3       = color.get_brewer('rdylbu4').colors[2]   # initial simulation   --> dark blue
@@ -452,9 +464,6 @@ iplot = 0
 fig = plt.figure(ifig)
 
 col_ignor   = color.colours('lightgray')
-# col_inf     = color.get_brewer('Paired6', rgb=True)[1] # dark blue
-# col_ninf    = color.get_brewer('Paired6', rgb=True)[0] # light blue
-# col_ninf    = color.get_brewer('Paired8', rgb=True)[7] # dark orange
 col_inf     = color.get_brewer('RdYlBu7', rgb=True)[0] # dark red
 col_ninf    = color.get_brewer('RdYlBu7', rgb=True)[2] # yellow
 markers = ['o','o','o','o']
@@ -620,9 +629,6 @@ iplot = 0
 fig = plt.figure(ifig)
 
 col_ignor   = color.colours('lightgray')
-# col_inf     = color.get_brewer('Paired6', rgb=True)[1] # dark blue
-# col_ninf    = color.get_brewer('Paired6', rgb=True)[0] # light blue
-# col_ninf    = color.get_brewer('Paired8', rgb=True)[7] # dark orange
 col_inf     = color.get_brewer('RdYlBu7', rgb=True)[0] # dark red
 col_ninf    = color.get_brewer('RdYlBu7', rgb=True)[2] # yellow
 markers = ['o','o','o','o']
@@ -651,19 +657,15 @@ for ipara in range(len(para_used)):
         idx_ninf  = np.where(np.array(parameters_inf_ninf[iibasin])[:,ipara]==1)[0]
         idx_inf   = np.where(np.array(parameters_inf_ninf[iibasin])[:,ipara]==0)[0]
 
-        print("basin: "+ibasin+"  para v"+str(para_used[ipara]+1)) #+": #inf=",len(idx_inf),"   #ninf=",len(idx_ninf))
+        print("basin: "+ibasin+"  para v"+str(para_used[ipara]+1)) 
 
         if len(idx_ignor) > 0:
             sub.scatter(doy[idx_ignor],temp_basin[ibasin][idx_ignor],marker=markers[iibasin],alpha=0.7,linewidths=0.0,s=msize,color=col_ignor)
         if len(idx_ninf) > 0:
             eee_vals_ninf = np.array(parameters_eee_vals[iibasin])[idx_ninf,ipara]
             eee_vals_max_ninf = np.max(np.array(parameters_eee_vals[iibasin]))
-            # eee_vals_max = np.max(eee_vals)           # <<<<<<<<<<<<<<<<<<<<< RETHINK!!! Should be max of all values in this basin not per parameter...
             eee_vals_med_ninf = np.median(eee_vals_ninf)
             eee_weights_ninf  = eee_vals_ninf/eee_vals_max_ninf
-            # sub.scatter(doy[idx_ninf], temp_basin[ibasin][idx_ninf],
-            #                 #markeredgecolor=col_ninf, #markerfacecolor=col_ninf, 
-            #                 marker=markers[iibasin],alpha=0.7,linewidths=0.0,s=np.where(eee_weights_ninf>0.01,msize*12*eee_weights_ninf,0.01*12*msize),color=col_ninf)
             for ii in range(np.shape(doy[idx_ninf])[0]):
                 sub.plot(doy[idx_ninf][ii],  temp_basin[ibasin][idx_ninf][ii],
                          linestyle='None',
@@ -675,12 +677,8 @@ for ipara in range(len(para_used)):
         if len(idx_inf) > 0:
             eee_vals_inf = np.array(parameters_eee_vals[iibasin])[idx_inf,ipara]
             eee_vals_max_inf = np.max(np.array(parameters_eee_vals[iibasin]))
-            # eee_vals_max = np.max(eee_vals)           # <<<<<<<<<<<<<<<<<<<<< RETHINK!!! Should be max of all values in this basin not per parameter...
             eee_vals_med_inf = np.median(eee_vals_inf)
             eee_weights_inf  = eee_vals_inf/eee_vals_max_inf
-            # sub.scatter(doy[idx_inf],  temp_basin[ibasin][idx_inf],
-            #                 #markeredgecolor=col_inf, #markerfacecolor=col_inf, 
-            #                 marker=markers[iibasin],alpha=0.7,linewidths=0.0,s=np.where(eee_weights_inf>0.01,msize*12*eee_weights_inf,0.01*12*msize),color=col_inf)
             for ii in range(np.shape(doy[idx_inf])[0]):
                 sub.plot(doy[idx_inf][ii],  temp_basin[ibasin][idx_inf][ii],
                          linestyle='None',
@@ -708,27 +706,24 @@ for ipara in range(len(para_used)):
             sub.text(max_day-3,perc_inf_temp[0],str2tex('$p^T_{1}='+astr(perc_inf_temp[0],prec=1)+'$',usetex=usetex),fontsize='xx-small',va='top',ha='right')
             sub.text(max_day-3,perc_inf_temp[1],str2tex('$p^T_{99}='+astr(perc_inf_temp[1],prec=1)+'$',usetex=usetex),fontsize='xx-small',va='bottom',ha='right')
 
-            if (para_used[ipara] == 2) or (para_used[ipara] == 3) or (para_used[ipara] == 5) or (para_used[ipara] == 7): # (para_used[ipara] == 0) or 
+            if (para_used[ipara] == 2) or (para_used[ipara] == 3) or (para_used[ipara] == 5) or (para_used[ipara] == 7): 
                 clustering=DBSCAN(eps=20, min_samples=2).fit(np.transpose(np.array([doy[idx_inf],temp_basin[ibasin][idx_inf]])),
                                                                  sample_weight=eee_weights_inf*2)
-                                                                 #sample_weight=np.where(eee_weights_inf<0.01,0.0,eee_weights_inf))
                 cluster_labels = clustering.labels_
-                #print("Cluster labels: ",np.unique(cluster_labels))
                 iclus_plot = 0
                 for iclus in np.unique(cluster_labels):
                     idx_clus=np.where(cluster_labels==iclus)
-                    print("  ------------------------------------------")
-                    print("  cluster label: ",iclus," DOYs: ",doy[idx_inf][idx_clus])
-                    print("  mean EEE of cluster: ",np.median(eee_weights_inf[idx_clus]))
-                    print("  max  EEE of cluster: ",np.max(eee_weights_inf[idx_clus]))
-                    print("  p95  EEE of cluster: ",np.percentile(eee_weights_inf[idx_clus],95))
+                    # print("  ------------------------------------------")
+                    # print("  cluster label: ",iclus," DOYs: ",doy[idx_inf][idx_clus])
+                    # print("  mean EEE of cluster: ",np.median(eee_weights_inf[idx_clus]))
+                    # print("  max  EEE of cluster: ",np.max(eee_weights_inf[idx_clus]))
+                    # print("  p95  EEE of cluster: ",np.percentile(eee_weights_inf[idx_clus],95))
                     
-                    # if np.median(eee_weights_inf[idx_clus]) > 0.05:
                     if np.percentile(eee_weights_inf[idx_clus],95) > 0.11: 
                         iclus_plot += 1
                         perc_inf_doy = [ my_weighted_perc(doy[idx_inf][idx_clus],1 ,weights=eee_weights_inf[idx_clus]),
                                          my_weighted_perc(doy[idx_inf][idx_clus],99 ,weights=eee_weights_inf[idx_clus]) ]
-                        print("      >>>>>>>>>> Plotted: DOY = ",perc_inf_doy)
+                        # print("      >>>>>>>>>> Plotted: DOY = ",perc_inf_doy)
                         sub.plot([perc_inf_doy[0],perc_inf_doy[0]],[min_temp,max_temp],color=col_inf, linewidth=0.3)
                         sub.plot([perc_inf_doy[1],perc_inf_doy[1]],[min_temp,max_temp],color=col_inf, linewidth=0.3)
                         sub.fill_between([perc_inf_doy[0],perc_inf_doy[1]],[min_temp,min_temp],[max_temp,max_temp],color=col_inf,alpha=0.1)
