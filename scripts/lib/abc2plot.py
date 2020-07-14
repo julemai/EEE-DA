@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from __future__ import print_function
-from jams.romanliterals import int2roman
+from romanliterals import int2roman
 
 def abc2plot(handle, dx, dy, iplot,
              integer=False, roman=False, lower=False,

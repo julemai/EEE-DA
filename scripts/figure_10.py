@@ -1049,7 +1049,7 @@ for iibasin, ibasin in enumerate(basin_name):
     # plot performance recipes (expert,EEE,openloop) for all lead times
     for iiselect, iselect in enumerate(selected_metrics):
 
-        idx_metric = objective_info.keys().index(iselect)
+        idx_metric = list(objective_info.keys()).index(iselect)
 
         # Expert recipe
         for iirecipe_expert, irecipe_expert in enumerate(recipe_expert):

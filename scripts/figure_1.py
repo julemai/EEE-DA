@@ -324,16 +324,7 @@ iplot += 1
 #     [left, bottom, width, height]
 pos = [0.1,0.8,0.45,0.15]
 sub = fig.add_axes(pos)
-#sub = fig.add_axes(position(nrow,ncol,iplot,hspace=hspace,vspace=vspace)) #, axisbg='none')
 
-# Map: Europe
-# m = Basemap(projection='lcc', llcrnrlon=-9, llcrnrlat=35.6, urcrnrlon=25.3, urcrnrlat=53,
-#             lat_1=50, lat_2=70, lon_0=0, resolution='i') # Lambert conformal
-# Map: USA
-# m = Basemap(projection='lcc',
-#             llcrnrlon=-119, llcrnrlat=22, urcrnrlon=-64, urcrnrlat=49,
-#             lat_1=33, lat_2=45, lon_0=-95,
-#             resolution='i') # Lambert conformal
 # Map: Canada - Saguenay-Lac-St-Jean region
 llcrnrlon =  -95.0
 urcrnrlon =  -49.0
@@ -343,11 +334,7 @@ lat_1     =   50.0  # first  "equator"
 lat_2     =   50.0  # second "equator"
 lat_0     =   50.0  # center of the map
 lon_0     =  -72.0  # center of the map
-# m = Basemap(projection='lcc',
-#             llcrnrlon=-80, llcrnrlat=43, urcrnrlon=-75, urcrnrlat=47,
-#             lon_0=-77.5, lat_0=43, 
-#             lat_1=44, lat_2=44, 
-#             resolution='i') # Lambert conformal
+
 map4 = Basemap(projection='lcc',
             llcrnrlon=llcrnrlon, urcrnrlon=urcrnrlon, llcrnrlat=llcrnrlat, urcrnrlat=urcrnrlat,
             lat_1=lat_1, lat_2=lat_2, lat_0=lat_0, lon_0=lon_0,
@@ -416,7 +403,6 @@ print("   --> lat range = [",map4(xmin,ymin,inverse=True)[1],",",map4(xmax,ymax,
 if doabc:
     
     #  [left, bottom, width, height]
-    # lsub = fig.add_axes([pos[0], pos[1]-0.02, pos[2], 0.05])
     lsub = fig.add_axes([pos[0]-0.36, pos[1]+pos[3]-0.01, pos[2]-0.01, pos[3]])
 
     lsub.set_xlim([0,1])
@@ -443,16 +429,7 @@ iplot += 1
 #     [left, bottom, width, height]
 pos = [0.4,0.8,0.45,0.15]
 sub = fig.add_axes(pos)
-#sub = fig.add_axes(position(nrow,ncol,iplot,hspace=hspace,vspace=vspace)) #, axisbg='none')
 
-# Map: Europe
-# m = Basemap(projection='lcc', llcrnrlon=-9, llcrnrlat=35.6, urcrnrlon=25.3, urcrnrlat=53,
-#             lat_1=50, lat_2=70, lon_0=0, resolution='i') # Lambert conformal
-# Map: USA
-# m = Basemap(projection='lcc',
-#             llcrnrlon=-119, llcrnrlat=22, urcrnrlon=-64, urcrnrlat=49,
-#             lat_1=33, lat_2=45, lon_0=-95,
-#             resolution='i') # Lambert conformal
 # Map: Canada - Saguenay-Lac-St-Jean region
 llcrnrlon =  -77.0
 urcrnrlon =  -67.0
@@ -462,11 +439,7 @@ lat_1     =   (llcrnrlat+urcrnrlat)/2.0  # first  "equator"
 lat_2     =   (llcrnrlat+urcrnrlat)/2.0  # second "equator"
 lat_0     =   (llcrnrlat+urcrnrlat)/2.0  # center of the map
 lon_0     =   (llcrnrlon+urcrnrlon)/2.0  # center of the map
-# m = Basemap(projection='lcc',
-#             llcrnrlon=-80, llcrnrlat=43, urcrnrlon=-75, urcrnrlat=47,
-#             lon_0=-77.5, lat_0=43, 
-#             lat_1=44, lat_2=44, 
-#             resolution='i') # Lambert conformal
+
 map4 = Basemap(projection='lcc',
             llcrnrlon=llcrnrlon, urcrnrlon=urcrnrlon, llcrnrlat=llcrnrlat, urcrnrlat=urcrnrlat,
             lat_1=lat_1, lat_2=lat_2, lat_0=lat_0, lon_0=lon_0,
@@ -554,7 +527,6 @@ print("   --> lat range = [",map4(xmin,ymin,inverse=True)[1],",",map4(xmax,ymax,
 if doabc:
     
     #  [left, bottom, width, height]
-    # lsub = fig.add_axes([pos[0], pos[1]-0.02, pos[2], 0.05])
     lsub = fig.add_axes([pos[0]-0.35, pos[1]+pos[3]-0.01, pos[2]-0.01, pos[3]])
 
     lsub.set_xlim([0,1])

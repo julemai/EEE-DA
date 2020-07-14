@@ -37,14 +37,14 @@ pid=$$
 dotex=1      # LaTeX for font setting
 
 # -----------------------------------------
-# Set figure(s) you want to plot to 1 and run ./plot.sh
+# Set figure(s) you want to plot to "1" and run ./plot.sh
 # -----------------------------------------
 
 dofig1=0     # figure_1:               (A) Overview of the Saguenay–Lac-Saint-Jean watershed in Northern Quebec,
 #                                      Canada. (B) Highlighted four subbasins used for this study. Details about the basins can be
 #                                      found in Table 1.
 
-dofig2=0     # figure_2:               Flowchart of the hydrologic model CEQUEAU. The adjustment variables vi in this
+dofig2=1     # figure_2:               Flowchart of the hydrologic model CEQUEAU. The adjustment variables vi in this
 #                                      study are indicated by the labels in circles. The state variables considered in this study are the
 #                                      level of the soil reservoir (adjusted through v1 in [mm]), the level of the groundwater reservoir
 #                                      (adjusted through v2 in [mm]), the amount of snow in the snowpack (adjusted through v3 in
@@ -61,7 +61,7 @@ dofig3=0    # figure_3:                Hydrographs with original and corrected f
 #                                      curves) demonstrating the performance increase achieved by correcting the meteorologic forcings
 #                                      following the approach explained in Section 2.3.2.
 
-dofig4=0     # figure_4:               Flowchart describing the experiments of this work. (A) We identify recipes, i.e. a
+dofig4=1     # figure_4:               Flowchart describing the experiments of this work. (A) We identify recipes, i.e. a
 #                                      set of (sensitive) parameters to optimize based on meteorologic conditions. A proposed recipe
 #                                      is identified using the Efficient Elementary Effects method (EEE); another recipe is determined
 #                                      by a forecasting analyst based on expert knowledge. (B) These two recipes are then tested re-
@@ -103,7 +103,7 @@ dofig7=0     # figure_7:               The classification of days based on (A) e
 #                                      ables adjusted for different recipes tested are added as labels. Details about the variables can be
 #                                      found in Tab. 2.
 
-dofig8=1     # figure_8:               Initial state adjustment performance for summer months (Jul to Nov). The (A)
+dofig8=0     # figure_8:               Initial state adjustment performance for summer months (Jul to Nov). The (A)
 #                                      nominal and (B) relative improvement of the initial state performance metric (WAE; Eq. 2)
 #                                      compared to an open-loop simulation using six different optimization strategies in four basins
 #                                      (Tab. 1, Fig. 1). The first three recipes (warm colors) are based on the Efficient Elementary Ef-
@@ -117,13 +117,13 @@ dofig8=1     # figure_8:               Initial state adjustment performance for 
 #                                      percentage of successful initial state adjustments and a summary of which inputs/states were
 #                                      adjusted for the different recipes can be found in Table 4.
 
-dofig9=1     # figure_9:               Forecast performance for summer months (Jul to Nov). The success rate is count-
+dofig9=0     # figure_9:               Forecast performance for summer months (Jul to Nov). The success rate is count-
 #                                      ing if a forecast with initial state adjustments following different recipes (colored lines) is yielding
 #                                      volume errors that are at least 5% better than the open-loop simulation for lead times up to 52
 #                                      weeks for four subbasins (A-D). Success rates above 50% indicate strategies that reliably outper-
 #                                      form the open-loop and are hence desirable.
 
-dofig10=1    # figure_10:              Forecast performance for summer months (Jul to Nov). The volume error E_V(L)
+dofig10=0    # figure_10:              Forecast performance for summer months (Jul to Nov). The volume error E_V(L)
 #                                      (Eq. 7) between observed streamflow (hindcast period) and the open-loop simulations (gray
 #                                      boxes) and forecasts issued using different recipes to adjust the initial states (colored boxes) for
 #                                      four catchments (A-D) over lead times L up to one year. The optimal volume error of zero is
@@ -212,7 +212,7 @@ if [[ ${dofig5} -eq 1 ]] ; then
     # Results of EEE analysis of 7-day simulations regarding streamflow
     # ---------------------------------------------------------------------
     # python figure_5.py -i ../../CRD-DA/EEE_results_2011-2015/ -o ../data/eee/eee_results.nc -p figure_5.pdf -t pdf -u
-    python figure_5.py -i ../data/eee/ -o ../data/eee/eee_results.nc -p figure_5.pdf -t pdf -u
+    python figure_5.py -i ../data/eee/ -o ../data/eee/eee_results.nc -p figure_5.pdf -t pdf 
     pdfcrop figure_5.pdf
     mv figure_5-crop.pdf ../figures/figure_5.pdf
     rm figure_5.pdf
@@ -224,7 +224,7 @@ if [[ ${dofig6_S1} -eq 1 ]] ; then
     # ---------------------------------------------------------------------
     # Results of EEE analysis correlated with DOY, temp, and precip to identify recipes
     # ---------------------------------------------------------------------
-    python figure_6_S1.py  -i ../data/eee/ -o ../data/eee/eee_results.nc -p figure_6_S1_ -t png -u
+    python figure_6_S1.py  -i ../data/eee/ -o ../data/eee/eee_results.nc -p figure_6_S1_ -t png 
     mv figure_6_S1_0001.png ../figures/figure_S1.png
     mv figure_6_S1_0002.png ../figures/figure_6.png
 fi

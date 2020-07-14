@@ -244,7 +244,6 @@ for icategorizer,categorizer in enumerate(categorizers):
 
 
 import numpy as np
-import jams
 from collections import OrderedDict
 import time
 t1 = time.time()
@@ -458,9 +457,6 @@ for icategorizer,categorizer_name in enumerate(categorizers):
         plt.setp(sub, xlabel=xlabel, xticks=xticks, xticklabels=xticklabels)
         plt.setp(sub, ylabel=ylabel, yticks=yticks, yticklabels=yticklabels)
 
-        # basin name
-        #sub.text(1.03, 0.5, '\n'.join(basin_name[ibasin].split()), fontsize=cbartsize, va='center', ha='center',rotation=90,transform=sub.transAxes)
-
         # numbering of subplots
         abc2plot(sub, dxabc, dyabc, iplot, lower=False, bold=True, va='top', ha='right', usetex=usetex, mathrm=True, parenthesis='none')      
 
@@ -545,11 +541,12 @@ for icategorizer,categorizer_name in enumerate(categorizers):
             cbar.set_ticks(cticks[:-1]+np.diff(cticks)/2.) # draw ticks in the middle
             cbar.set_ticklabels(cticknames)
             cbar.ax.tick_params(direction='out', length=3, width=1, colors=fgcolor, labelsize=cbartsize, pad=-1.0,
-                                bottom='off', top='on', labelbottom='off', labeltop='on')
+                                bottom=False, top=True, labelbottom=False, labeltop=True)
             for iitick,itick in enumerate(cticks[:-1]):
                 # print( 'Percentage of days in category "',cticknames[iitick],'"',astr(percent_in_cat[iitick],prec=1))
                 tick_location = cticks #cbar.get_ticks()
-                csub.text(1.0/(len(cvals)-1)*(iitick+0.5), 0.5, str2tex(astr(percent_in_cat[iitick],prec=1)+'%',usetex=usetex), fontsize='xx-small', va='center', ha='center',rotation=0)
+                csub.text(1.0/(len(cvals)-1)*(iitick+0.5), 0.5, str2tex(astr(percent_in_cat[iitick],prec=1)+'%',usetex=usetex),
+                              fontsize='xx-small', va='center', ha='center',rotation=0, transform=csub.transAxes)
 
 
         # categorizer name
@@ -596,7 +593,7 @@ for icategorizer,categorizer_name in enumerate(categorizers):
                 raise ValueError('Categorizer not known!')
             
             iitick = 0
-            csub.text(1.0/(len(cvals)-1)*(iitick+1.0), dy, str2tex(lbl,usetex=usetex), fontsize='xx-small', va='top', ha='right',rotation=0)
+            csub.text(1.0/(len(cvals)-1)*(iitick+1.0), dy, str2tex(lbl,usetex=usetex), fontsize='xx-small', va='top', ha='right',rotation=0, transform=csub.transAxes)
 
             for iitick,itick in enumerate(cticks[1:-1]):
                 
@@ -613,7 +610,7 @@ for icategorizer,categorizer_name in enumerate(categorizers):
                     lbl = ','.join([ ('$'+ii+'}$').replace('v','v_{') for ii in vars_recipe[iitick] ])
 
                 # dy = 0.5-(irecipe+1)
-                csub.text(1.0/(len(cvals)-1)*(iitick+1.5), dy, str2tex(lbl,usetex=usetex), fontsize='xx-small', va='top', ha='center',rotation=0)
+                csub.text(1.0/(len(cvals)-1)*(iitick+1.5), dy, str2tex(lbl,usetex=usetex), fontsize='xx-small', va='top', ha='center',rotation=0, transform=csub.transAxes)
 
             # set dy for next recipe
             dy -= 0.6

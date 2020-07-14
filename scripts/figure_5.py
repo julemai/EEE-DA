@@ -359,29 +359,13 @@ if (outtype == 'pdf'):
     from matplotlib.backends.backend_pdf import PdfPages
     # Customize: http://matplotlib.sourceforge.net/users/customizing.html
     mpl.rc('ps', papersize='a4', usedistiller='xpdf') # ps2pdf
-    # mpl.rc('figure', figsize=(8.27,11.69)) # a4 portrait
-    mpl.rc('figure', figsize=(7.48,9.06)) # WRR maximal figure size
+    mpl.rc('figure', figsize=(8.27,11.69)) # a4 portrait
     if usetex:
         mpl.rc('text', usetex=True)
-        if not serif:
-            #   r'\usepackage{helvet}',                             # use Helvetica
-            mpl.rcParams['text.latex.preamble'] = [
-                r'\usepackage[math,lf,mathtabular,footnotefigures]{MyriadPro}', # use MyriadPro font
-                r'\renewcommand{\familydefault}{\sfdefault}',       # normal text font is sans serif
-                r'\figureversion{lining,tabular}',
-                r'\usepackage{wasysym}',                            # for permil symbol (load after MyriadPro)
-                ]
-        else:
-            mpl.rcParams['text.latex.preamble'] = [
-                r'\usepackage{wasysym}'                     # for permil symbol
-                ]
     else:
-        if serif:
-            mpl.rcParams['font.family']     = 'serif'
-            mpl.rcParams['font.sans-serif'] = 'Times'
-        else:
-            mpl.rcParams['font.family']     = 'sans-serif'
-            mpl.rcParams['font.sans-serif'] = 'Arial'       # Arial, Verdana
+        #mpl.rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+        mpl.rc('font',**{'family':'serif','serif':['times']})
+    mpl.rc('text.latex', unicode=True)
 elif (outtype == 'png'):
     mpl.use('Agg') # set directly after import matplotlib
     import matplotlib.pyplot as plt
@@ -399,7 +383,7 @@ else:
 mpl.rc('font', size=textsize)
 mpl.rc('lines', linewidth=lwidth, color='black')
 mpl.rc('axes', linewidth=alwidth, labelcolor='black')
-mpl.rc('path', simplify=False) # do not remove
+mpl.rc('path', simplify=False) # do not remove 
 
 # -------------------------------------------------------------------------
 # Plot
@@ -487,7 +471,7 @@ for iibasin, ibasin in enumerate(basin_short_name):
         shrink = 0.6
         pos[0] += 0.5*(1.-shrink)*pos[2] # shrink
         pos[2]  = shrink*pos[2]
-        pos[1] += 1.2*pos[3]            # shift up
+        pos[1] += 1.30*pos[3]            # shift up
         pos[3] *= 0.125                  # squeeze
         csub = fig.add_axes(pos, frameon=False)
         cbar = plt.colorbar(mesh, cax=csub, orientation='horizontal')
