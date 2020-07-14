@@ -2,3 +2,13 @@ figures/figure_*.pdf
 figures/figure_*.png
 
 data
+
+env-3.8/bin/
+env-3.8/include/
+env-3.8/lib/
+env-3.8/share/
+
+lib/__pycache__
+lib/color/__pycache__
+lib/const/__pycache__
+lib/netcdf4/__pycache__
