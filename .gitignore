@@ -1,8 +1,6 @@
 figures/figure_*.pdf
 figures/figure_*.png
 
-data
-
 env-3.8/bin/
 env-3.8/include/
 env-3.8/lib/
