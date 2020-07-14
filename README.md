@@ -1,5 +1,8 @@
 # Application of Parameter Screening To Derive Optimal Initial State Adjustments for Streamflow Forecasting
-*by J. Mai,  R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester*
+*by J. Mai<sup> 1</sup>,  R. Arsenault<sup> 2</sup>, B.A. Tolson<sup> 1</sup>, M. Latraverse<sup> 3</sup>, and K. Demeester<sup> 3</sup>*<br><br>
+*<sup> 1</sup> Dept. Civil and Environmental Engineering, University of Waterloo, Waterloo, ON, Canada.*<br>
+*<sup> 2</sup> Dépt. de génie de la construction, École de Technologie Supérieure, Montreal, QC, Canada.*<br>
+*<sup> 3</sup> Aluminium division, Rio Tinto, Jonquière, QC, Canada.*<br>
 
 ## Abstract
 Streamflow forecasting is essential in many applications, including the management of hydropower reservoirs and of flood risks. To increase the performance of these hydrologic forecasts, a hydrological model is typically updated with optimal initial model states. These states are usually selected a priori and adjusted to obtain the optimal initial setup. The model states to adjust are generally selected by experts with deep knowledge of the model's behaviour. These relationships are rarely documented and formalized leading to difficulties in reproducibility and transferability to other models.
