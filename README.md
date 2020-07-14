@@ -23,4 +23,4 @@ https://doi.org/10.1002/???.
 J. Mai,  R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020) .<br>
 Application of Parameter Screening To Derive Optimal Initial State Adjustments for Streamflow Forecasting (v1.0).<br>
 *Zenodo*<br>
-https://doi.org/10.5281/zenodo.???
+https://doi.org/10.5281/zenodo.3945225
