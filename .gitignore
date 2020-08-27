@@ -1,3 +1,6 @@
+**.pyc
+**.DS_Store
+
 figures/figure_*.pdf
 figures/figure_*.png
 
