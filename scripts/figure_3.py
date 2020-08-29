@@ -10,8 +10,8 @@ from __future__ import print_function
 #       J. Mai, R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020).
 #       Application of Parameter Screening To Derive Optimal Initial State 
 #       Adjustments for Streamflow Forecasting.
-#       Water Resources Research, ??, ???-???.
-#       https://doi.org/10.1002/???.
+#       Water Resources Research, 56, e2020WR027960.
+#       https://doi.org/10.1029/2020WR027960
 #
 #    The EEE-DA codes are under MIT license.
 #
@@ -232,7 +232,7 @@ for basin in basin_name:
 
     # read time
     ttime_obs = nc_observ.variables[u't']
-    ttime_obs = netCDF4.num2date(ttime_obs[:],ttime_obs.units)
+    ttime_obs = netCDF4.num2date(ttime_obs[:],ttime_obs.units,only_use_cftime_datetimes=False) # only_use_cftime_datetimes=False return datetime objects
 
     # close file
     nc_observ.close()   # close results file
@@ -401,6 +401,9 @@ bbox_inches = 'tight'
 pad_inches  = 0
 
 import matplotlib as mpl
+mpl.rcParams['pdf.fonttype'] = 42   # use Type 42 (a.k.a. TrueType) fonts for PostScript and PDF files
+mpl.rcParams['ps.fonttype'] = 42    # use Type 42 (a.k.a. TrueType) fonts for PostScript and PDF files
+
 if (outtype == 'pdf'):
     mpl.use('PDF') # set directly after import matplotlib
     import matplotlib.pyplot as plt
@@ -413,7 +416,7 @@ if (outtype == 'pdf'):
     else:
         #mpl.rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
         mpl.rc('font',**{'family':'serif','serif':['times']})
-    mpl.rc('text.latex', unicode=True)
+    mpl.rc('text.latex') #, unicode=True)
 elif (outtype == 'png'):
     mpl.use('Agg') # set directly after import matplotlib
     import matplotlib.pyplot as plt
@@ -423,7 +426,7 @@ elif (outtype == 'png'):
     else:
         #mpl.rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
         mpl.rc('font',**{'family':'serif','serif':['times']})
-    mpl.rc('text.latex', unicode=True)
+    mpl.rc('text.latex') #, unicode=True)
     mpl.rc('savefig', dpi=dpi, format='png')
 else:
     import matplotlib.pyplot as plt
