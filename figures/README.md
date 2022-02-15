@@ -9,11 +9,11 @@ This folder will contain all the figures of the publication. Please see the main
 ### Journal Publication
 J. Mai,  R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020) .<br>
 Application of Parameter Screening To Derive Optimal Initial State Adjustments for Streamflow Forecasting.<br>
-*Water Resources Research*, ??, ???-???.<br>
-https://doi.org/10.1002/???.
+*Water Resources Research*, 56, e2020WR027960.<br>
+https://doi.org/10.1029/2020WR027960
 
 ### Code Publication
 J. Mai,  R. Arsenault, B.A. Tolson, M. Latraverse, and K. Demeester (2020) .<br>
-Application of Parameter Screening To Derive Optimal Initial State Adjustments for Streamflow Forecasting (v1.0).<br>
+Application of Parameter Screening To Derive Optimal Initial State Adjustments for Streamflow Forecasting: EEE-DA (v1.1).<br>
 *Zenodo*<br>
-https://doi.org/10.5281/zenodo.???
+https://doi.org/10.5281/zenodo.4007962
